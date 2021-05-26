@@ -9,6 +9,7 @@ DigitalIn encoder(D10);
 PwmOut servo(D11);
 
 Timer t;
+Timer t2;
 
 Ticker encoder_ticker;
 
@@ -52,8 +53,8 @@ int main()
     {
 
         //TODO: revise this value according to your result
-
-        servo_control(142.883);
+        //clockwise 5cm/sec
+        servo_control(-100);
 
         steps = 0;
 
@@ -61,10 +62,26 @@ int main()
 
         t.start();
 
-        ThisThread::sleep_for(8000ms);
+        ThisThread::sleep_for(5000ms);
 
         float time = t.read();
 
         printf("%1.3f\r\n", (float)steps * 6.5 * 3.14 / 32 / time);
+
+        //TODO: revise this value according to your result
+        //counterclockwise 8cm/sec
+        servo_control(65);
+
+        steps = 0;
+
+        t2.reset();
+
+        t2.start();
+
+        ThisThread::sleep_for(5000ms);
+
+        float time2 = t2.read();
+
+        printf("%1.3f\r\n", (float)steps * 6.5 * 3.14 / 32 / time2);
     }
 }
